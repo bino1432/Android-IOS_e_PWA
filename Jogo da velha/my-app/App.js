@@ -1,24 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import { StyleSheet, View} from 'react-native';
+import Home from './src/Home';
+import Jogo from './src/Jogo';
 
 export default function App() {
   
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
+  const [screen, setScreen] = useState("Home");
 
-  const handleClick = (event) => {
-    alert("Click")
+  const checkScreen = (checkScreen) => checkScreen === screen;
+
+  const setJogadores = (nome1, nome2) => {
+    setPlayer1(nome1);
+    setPlayer2(nome2);
   }
+
+  const changeScreen = (newScreen) => setScreen(newScreen);
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Nome player1: {player1}</Text>
-      <TextInput style={styles.input} placeholder='Player 1' onChangeText={setPlayer1}/>
-      <Text>Nome player2: {player2}</Text>
-      <TextInput style={styles.input} placeholder='Player 2' onChangeText={setPlayer2}/>
-      <Button title="botao" onPress={handleClick}/>
+      {checkScreen("Home") && (
+        <Home 
+        mudarNomeJogadores={setJogadores}
+        changeScreen={changeScreen}
+        />
+      )}
+      {checkScreen("Jogo") && (
+        <Jogo changeScreen={changeScreen} />
+      )}
     </View>
   );
 }
@@ -29,12 +41,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  input: {
-    width: '80%',
-    heigth: 20,
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderWidth: 1,
   },
 });
