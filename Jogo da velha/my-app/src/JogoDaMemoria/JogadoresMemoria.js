@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 
-export default function Home({
+export default function JogadoresMemoria({
     mudarNomeJogadores,
     changeScreen
 }) {
@@ -10,19 +10,34 @@ export default function Home({
   const [player2, setPlayer2] = useState("");
 
   const handleClick = (event) => {
-    if(mudarNomeJogadores) {
+    if(player1 == "" && player2 == "") {
+      alert("Insira o nome dos Jogadores")
+    } else if (player1 == "") {
+      alert("Insira o nome do Jogador 1")
+    } else if (player2 == "") {
+      alert("Insira o nome do Jogador 2")
+    } else {
+      if(mudarNomeJogadores) {
         mudarNomeJogadores(player1, player2)
-        changeScreen("Jogo")
+        alert(player1 + " x " + player2)
+        changeScreen("JogoMemoria")
+      }
     }
+  }
+
+  const voltar = () => {
+    changeScreen("Inicial")
   }
 
   return (
     <View style={styles.container}>
+      <Text>Bem Vindo ao jogo da Memoria!</Text>
       <Text>Nome player1: {player1}</Text>
       <TextInput style={styles.input} placeholder='Player 1' onChangeText={setPlayer1}/>
       <Text>Nome player2: {player2}</Text>
       <TextInput style={styles.input} placeholder='Player 2' onChangeText={setPlayer2}/>
       < Button title="Avançar" onPress={handleClick}/>
+      <Button title="Voltar" onPress={voltar}/>
     </View>
   );
 }

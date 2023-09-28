@@ -1,14 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, View} from 'react-native';
-import Home from './src/Home';
-import Jogo from './src/Jogo';
+import JogadoresVelha from './src/JogoDaVelha/JogadoresVelha';
+import JogoVelha from './src/JogoDaVelha/JogoVelha';
+import JogadoresMemoria from './src/JogoDaMemoria/JogadoresMemoria';
+import JogoMemoria from './src/JogoDaMemoria/JogoMemoria';
+import EscolhaPalavra from './src/JogoDaForca/EscolhaPalavra';
+import JogoForca from './src/JogoDaForca/JogoForca';
+import Inicial from './src/Inicial';
 
 export default function App() {
   
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
-  const [screen, setScreen] = useState("Home");
+  const [screen, setScreen] = useState("Inicial");
 
   const checkScreen = (checkScreen) => checkScreen === screen;
 
@@ -22,14 +27,42 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {checkScreen("Home") && (
-        <Home 
+      {checkScreen("Inicial") && (
+        <Inicial
+        changeScreen={changeScreen}
+        />
+      )}
+      {checkScreen("JogadoresVelha") && (
+        <JogadoresVelha 
         mudarNomeJogadores={setJogadores}
         changeScreen={changeScreen}
         />
       )}
-      {checkScreen("Jogo") && (
-        <Jogo changeScreen={changeScreen} />
+      {checkScreen("JogoVelha") && (
+        <JogoVelha 
+        changeScreen={changeScreen} 
+        />
+      )}
+      {checkScreen("EscolhaPalavra") && (
+        <EscolhaPalavra 
+        changeScreen={changeScreen}
+        />
+      )}
+      {checkScreen("JogoForca") && (
+        <JogoForca 
+        changeScreen={changeScreen}
+        />
+      )}
+      {checkScreen("JogadoresMemoria") && (
+        <JogadoresMemoria 
+        mudarNomeJogadores={setJogadores}
+        changeScreen={changeScreen} 
+        />
+      )}
+      {checkScreen("JogoMemoria") && (
+        <JogoMemoria 
+        changeScreen={changeScreen} 
+        />
       )}
     </View>
   );

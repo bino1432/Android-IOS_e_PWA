@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
-export default function Jogo({
+export default function JogoVelha({
     changeScreen
 }) {
     const [b1, setb1] = useState("");
@@ -16,7 +16,7 @@ export default function Jogo({
     const [vez, setVez] = useState("player1");
 
     const handleClick = (event) => {
-        changeScreen("Home")
+        changeScreen("JogadoresVelha")
     }
 
     const handleClickB1 = (event) => {
