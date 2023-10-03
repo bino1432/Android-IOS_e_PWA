@@ -2,152 +2,142 @@ import { useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
 export default function JogoVelha({
-    changeScreen
+    changeScreen,
+    Jogador1,
+    Jogador2
 }) {
-    const [b1, setb1] = useState("");
-    const [b2, setb2] = useState("");
-    const [b3, setb3] = useState("");
-    const [b4, setb4] = useState("");
-    const [b5, setb5] = useState("");
-    const [b6, setb6] = useState("");
-    const [b7, setb7] = useState("");
-    const [b8, setb8] = useState("");
-    const [b9, setb9] = useState("");
-    const [vez, setVez] = useState("player1");
+
+    const [vez, setVez] = useState("X")
+    const [btn1, setbtn1] = useState("-")
+    const [btn2, setbtn2] = useState("-")
+    const [btn3, setbtn3] = useState("-")
+    const [btn4, setbtn4] = useState("-")
+    const [btn5, setbtn5] = useState("-")
+    const [btn6, setbtn6] = useState("-")
+    const [btn7, setbtn7] = useState("-")
+    const [btn8, setbtn8] = useState("-")
+    const [btn9, setbtn9] = useState("-")
+    
 
     const handleClick = (event) => {
         changeScreen("JogadoresVelha")
     }
-
-    const handleClickB1 = (event) => {
-        if(!b1){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    
+    const VerificarVitoria = () => {
+        if(btn1 == {vez} && btn2 == {vez} && btn3 == {vez}) {
+            console.log("certo")
         }
     }
 
-    const handleClickB2 = (event) => {
-        if(!b2){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const TrocaPlayer = () => {
+        if(vez == "X"){
+            setVez("O")
+        } else {
+            setVez("X")
         }
     }
 
-    const handleClickB3 = (event) => {
-        if(!b3){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const FunctionBtn1 = () =>{
+        if(btn1 == "-"){
+            setbtn1(vez);
+            TrocaPlayer();
         }
+        VerificarVitoria();
     }
 
-    const handleClickB4 = (event) => {
-        if(!b4){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const FunctionBtn2 = () =>{
+        if(btn2 == "-"){
+            setbtn2(vez);
+            TrocaPlayer();
         }
+        VerificarVitoria();
     }
 
-    const handleClickB5 = (event) => {
-        if(!b5){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const FunctionBtn3 = () =>{
+        if(btn3 == "-"){
+            setbtn3(vez);
+            TrocaPlayer();
         }
+        VerificarVitoria();
     }
 
-    const handleClickB6 = (event) => {
-        if(!b6){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const FunctionBtn4 = () =>{
+        if(btn4 == "-"){
+            setbtn4(vez);
+            TrocaPlayer();
         }
+        VerificarVitoria();
     }
 
-    const handleClickB7 = (event) => {
-        if(!b7){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const FunctionBtn5 = () =>{
+        if(btn5 == "-"){
+            setbtn5(vez);
+            TrocaPlayer();
         }
+        VerificarVitoria();
     }
 
-    const handleClickB8 = (event) => {
-        if(!b8){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const FunctionBtn6 = () =>{
+        if(btn6 == "-"){
+            setbtn6(vez);
+            TrocaPlayer();
         }
+        VerificarVitoria();
     }
 
-    const handleClickB9 = (event) => {
-        if(!b9){
-            mudarVez();
-            if(vez == player1){
-                setb9("X");
-            }else{
-                setb9("O");
-            }
+    const FunctionBtn7 = () =>{
+        if(btn7 == "-"){
+            setbtn7(vez);
+            TrocaPlayer();
         }
+        VerificarVitoria();
     }
+
+    const FunctionBtn8 = () =>{
+        if(btn8 == "-"){
+            setbtn8(vez);
+            TrocaPlayer();
+        }
+        VerificarVitoria();
+    }
+
+    const FunctionBtn9 = () =>{
+        if(btn9 == "-"){
+            setbtn9(vez);
+            TrocaPlayer();
+        }
+        VerificarVitoria();
+    }
+
+    const getPlayerName = () => vez === "X" ? Jogador1 : Jogador2
 
     return (
         <View>
-            <Text>Jogo</Text>
-            <Button title="voltar" onPress={handleClick}/>
+            <Text>Jogo da Velha</Text>
+            <Text>É a vez do Player: {getPlayerName()} - {vez}</Text>
+            
+            <View>
+                <View style={styles.container}>
+                    <Button title={btn1} onPress={FunctionBtn1}/>
+                    <Button title={btn2} onPress={FunctionBtn2}/>
+                    <Button title={btn3} onPress={FunctionBtn3} />
+                </View>
+                <View style={styles.container}>
+                    <Button title={btn4} onPress={FunctionBtn4}/>
+                    <Button title={btn5} onPress={FunctionBtn5}/>
+                    <Button title={btn6} onPress={FunctionBtn6}/>
+                </View>
+                <View style={styles.container}>
+                    <Button title={btn7} onPress={FunctionBtn7}/>
+                    <Button title={btn8} onPress={FunctionBtn8}/>
+                    <Button title={btn9} onPress={FunctionBtn9}/>
+                </View>
+            </View>
 
-            <View style={styles.container}>
-                <Button title={b1} onPress={handleClickB1}/>
-                <Button title={b2} onPress={handleClickB2}/>
-                <Button title={b3} onPress={handleClickB3}/>
-            </View>
-            <View style={styles.container}>
-                <Button title={b4} onPress={handleClickB4}/>
-                <Button title={b5} onPress={handleClickB5}/>
-                <Button title={b6} onPress={handleClickB6}/> 
-            </View>
-            <View style={styles.container}>
-                <Button title={b7} onPress={handleClickB7}/>
-                <Button title={b8} onPress={handleClickB8}/>
-                <Button title={b9} onPress={handleClickB9}/>
-            </View>
+            <Button title="Trocar" onPress={TrocaPlayer}/>
+            <Button title="voltar" onPress={handleClick}/>
         </View>
     )
-}
-
-function mudarVez() {
-    if({vez} == player1){
-        setVez("player2")
-    } else {
-        setVez("player1")
-    }
 }
 
 const styles = StyleSheet.create({

@@ -40,7 +40,9 @@ export default function App() {
       )}
       {checkScreen("JogoVelha") && (
         <JogoVelha 
-        changeScreen={changeScreen} 
+        changeScreen={changeScreen}
+        Jogador1={player1}
+        Jogador2={player2}
         />
       )}
       {checkScreen("EscolhaPalavra") && (

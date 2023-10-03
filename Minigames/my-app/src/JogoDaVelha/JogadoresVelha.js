@@ -9,7 +9,7 @@ export default function JogadoresVelha({
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     if(player1 == "" && player2 == "") {
       alert("Insira o nome dos Jogadores")
     } else if (player1 == "") {
