@@ -24,8 +24,38 @@ export default function JogoVelha({
     }
     
     const VerificarVitoria = () => {
-        if(btn1 == {vez} && btn2 == {vez} && btn3 == {vez}) {
-            console.log("certo")
+        if(btn1 == "X" && btn2 == "X" && btn3 == "X") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn4 == "X" && btn5 == "X" && btn6 == "X") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn7 == "X" && btn8 == "X" && btn9 == "X") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn1 == "X" && btn5 == "X" && btn9 == "X") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn3 == "X" && btn5 == "X" && btn7 == "X") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        }
+
+        if(btn1 == "O" && btn2 == "O" && btn3 == "O") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn4 == "O" && btn5 == "O" && btn6 == "O") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn7 == "O" && btn8 == "O" && btn9 == "O") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn1 == "O" && btn5 == "O" && btn9 == "O") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
+        } else if (btn3 == "O" && btn5 == "O" && btn7 == "O") {
+            alert("O Jogador: " + getPlayerWin() + " Venceu")
+            changeScreen("JogadoresVelha")
         }
     }
 
@@ -111,6 +141,8 @@ export default function JogoVelha({
 
     const getPlayerName = () => vez === "X" ? Jogador1 : Jogador2
 
+    const getPlayerWin = () => vez === "X" ? Jogador2 : Jogador1
+
     return (
         <View>
             <Text>Jogo da Velha</Text>
@@ -134,16 +166,17 @@ export default function JogoVelha({
                 </View>
             </View>
 
-            <Button title="Trocar" onPress={TrocaPlayer}/>
             <Button title="voltar" onPress={handleClick}/>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    
     container: {
         flex:1,
         flexDirection: 'row',
-        maxHeight: 70,
+        maxHeight: 70
     }
+
 });
