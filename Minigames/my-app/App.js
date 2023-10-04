@@ -13,6 +13,7 @@ export default function App() {
   
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
+  const [palavra, setPalavra] = useState("");
   const [screen, setScreen] = useState("Inicial");
 
   const checkScreen = (checkScreen) => checkScreen === screen;
@@ -20,6 +21,10 @@ export default function App() {
   const setJogadores = (nome1, nome2) => {
     setPlayer1(nome1);
     setPlayer2(nome2);
+  }
+
+  const setPalavraForca = (Resposta) => {
+    setPalavra(Resposta)
   }
 
   const changeScreen = (newScreen) => setScreen(newScreen);
@@ -48,11 +53,13 @@ export default function App() {
       {checkScreen("EscolhaPalavra") && (
         <EscolhaPalavra 
         changeScreen={changeScreen}
+        mudarPalavra={setPalavraForca}
         />
       )}
       {checkScreen("JogoForca") && (
         <JogoForca 
         changeScreen={changeScreen}
+        Forca={palavra}
         />
       )}
       {checkScreen("JogadoresMemoria") && (

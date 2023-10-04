@@ -1,7 +1,8 @@
 import { View, Button, Text } from "react-native"
 
 export default function JogoForca ({
-    changeScreen
+    changeScreen,
+    Forca
 }) {
     
     const voltar = () => {
@@ -10,7 +11,7 @@ export default function JogoForca ({
 
     return (
         <View>
-            <Text>Tela Jogo da Forca</Text>
+            <Text>a palavra é: {Forca}</Text>
             <Button title="Voltar" onPress={voltar}/>
         </View>
     )

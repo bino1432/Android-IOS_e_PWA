@@ -2,11 +2,12 @@ import { useState } from "react"
 import { Button, View, Text, TextInput } from "react-native"
 
 export default function EscolhaPalavra ({
-    changeScreen
+    changeScreen,
+    mudarPalavra
 }) {
 
     const [palavra, setPalavra] = useState("");
-
+    
     const voltar = () => {
         changeScreen("Inicial")
     }
@@ -15,7 +16,10 @@ export default function EscolhaPalavra ({
         if(palavra == ""){
             alert("Insira uma Palavra!")
         } else {
-            changeScreen("JogoForca")
+            if (mudarPalavra) {
+                mudarPalavra(palavra)
+                changeScreen("JogoForca")
+            }
         }
     }
 
