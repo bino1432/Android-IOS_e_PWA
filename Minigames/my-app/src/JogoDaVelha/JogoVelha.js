@@ -21,7 +21,7 @@ export default function JogoVelha({
     }, [states])
 
     const checkPlayerWin = (vez) => {
-        // check lines
+        
         for (let i = 0; i < 3; i++) {
             if (states[i][0] === vez
                 && states[i][1] === vez
@@ -29,7 +29,7 @@ export default function JogoVelha({
                 return true
             }
         }
-        // check columns
+        
         for (let i = 0; i < 3; i++) {
             if (states[0][i] === vez
                 && states[1][i] === vez
@@ -38,7 +38,6 @@ export default function JogoVelha({
             }
         }
 
-        // check others
         if (states[0][0] === vez
             && states[1][1] === vez
             && states[2][2] === vez) {
