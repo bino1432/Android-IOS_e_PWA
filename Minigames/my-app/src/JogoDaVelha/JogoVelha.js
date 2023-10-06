@@ -21,7 +21,7 @@ export default function JogoVelha({
     }, [states])
 
     const checkPlayerWin = (vez) => {
-        
+
         for (let i = 0; i < 3; i++) {
             if (states[i][0] === vez
                 && states[i][1] === vez
@@ -29,7 +29,7 @@ export default function JogoVelha({
                 return true
             }
         }
-        
+
         for (let i = 0; i < 3; i++) {
             if (states[0][i] === vez
                 && states[1][i] === vez
@@ -102,35 +102,10 @@ export default function JogoVelha({
 
     const getPlayerName = () => vez === "X" ? Jogador1 : Jogador2
 
-    // const getPlayerWin = () => vez === "X" ? Jogador2 : Jogador1
-
     return (
         <View style={styles.container}>
             <Text>Jogo da Velha</Text>
             <Text>É a vez do Player: {getPlayerName()} - {vez}</Text>
-
-            {/* <View style={styles.board}>
-                <View style={styles.lines} />
-                <View style={[styles.lines, {
-                    transform: [
-                        { translateX: 200 }
-                    ]
-                }]} />
-                <View style={[styles.lines, {
-                    height: 3,
-                    width: 306,
-                    transform: [
-                        { translateY: 100 }
-                    ]
-                }]} />
-                <View style={[styles.lines, {
-                    height: 3,
-                    width: 306,
-                    transform: [
-                        { translateY: 200 }
-                    ]
-                }]} />
-            </View> */}
 
             {
                 states.map((line, indexLine) => {
@@ -140,10 +115,11 @@ export default function JogoVelha({
                                 <TouchableOpacity
                                     key={`${indexLine}${indexColumn}${column}`}
                                     onPress={() => handleClickPosition(indexLine, indexColumn)}
-                                >
+                                >                                   
                                     <View style={styles.buttonGame}>
                                         <Text style={styles.buttonGameFont}>
                                             {column}
+                                            
                                         </Text>
                                     </View>
                                 </TouchableOpacity>
@@ -153,7 +129,6 @@ export default function JogoVelha({
                 })
             }
 
-            <Button title="Trocar" onPress={TrocaPlayer} />
             <Button title="voltar" onPress={handleClick} />
         </View>
     )
@@ -168,35 +143,21 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 40,
     },
-    board: {
-        borderWidth: 3,
-        height: 312,
-        width: 312,
-    },
     line: {
         display: "flex",
         flexDirection: "row"
     },
-    lines: {
-        backgroundColor: '#000',
-        height: 306,
-        width: 3,
-        position: 'absolute',
-        transform: [
-            { translateX: 100 }
-        ],
-    },
     buttonGame: {
-        backgroundColor: 'red',
+        backgroundColor: '#fff',
         width: 80,
         height: 80,
-        margin: 2,
+        borderWidth: 3,
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
     },
     buttonGameFont: {
         fontSize: 50,
-        color: "#fff"
+        color: "#000"
     }
 });
