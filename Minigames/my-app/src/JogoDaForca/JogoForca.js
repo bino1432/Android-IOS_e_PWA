@@ -7,17 +7,15 @@ export default function JogoForca({
 }) {
 
     const [palavra, setPalavra] = useState(Forca)
-    const [palavraEscondida, setPalavraEscondida] = useState(palavra.leght)
+    const [palavraEscondida, setPalavraEscondida] = useState([])
     const [letras, setLetras] = useState([])
     const [vidas, setVidas] = useState(6)
 
     useEffect(() => {
-        setPalavra(palavra.toUpperCase());
-    
-        for(let cont = 0; cont <= palavra; cont++){
-            setPalavraEscondida(palavra[cont].fill('_'));
-        }
-        
+        const randomIndex = Math.floor(Math.random() * palavra.length);
+        setPalavra(palavra[randomIndex].toUpperCase());
+
+        setPalavraEscondida(Array(palavra.leght).fill('_'));
     }, []);
 
     const voltar = () => {
