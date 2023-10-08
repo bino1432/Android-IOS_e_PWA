@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     },
     linha: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
     },
     tabuleiroDoJogo: {
         backgroundColor: '#fff',
@@ -154,10 +154,10 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     casasTabuleiro: {
         fontSize: 50,
-        color: "#000"
+        color: "#000",
     }
 });

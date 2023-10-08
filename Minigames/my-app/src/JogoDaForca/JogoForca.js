@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { View, Button, Text } from "react-native"
-import { TextInput } from "react-native-web"
+import { View, Button, Text, TextInput, StyleSheet } from "react-native"
 
 export default function JogoForca({
     changeScreen,
@@ -8,15 +7,17 @@ export default function JogoForca({
 }) {
 
     const [palavra, setPalavra] = useState(Forca)
-    const [palavraEscondia, setPalavraEscondia] = useState([])
+    const [palavraEscondida, setPalavraEscondida] = useState(palavra.leght)
     const [letras, setLetras] = useState([])
     const [vidas, setVidas] = useState(6)
 
     useEffect(() => {
-        const indexAleatorio = Math.floor(Math.random() * palavra.length);
-        setPalavra(palavra[indexAleatorio].toUpperCase());
-
-        setPalavraEscondia(Array(palavra.leght).fill('_'));
+        setPalavra(palavra.toUpperCase());
+    
+        for(let cont = 0; cont <= palavra; cont++){
+            setPalavraEscondida(palavra[cont].fill('_'));
+        }
+        
     }, []);
 
     const voltar = () => {
@@ -25,10 +26,10 @@ export default function JogoForca({
 
     const veridicarLetras = (letra) => {
         if (palavra.includes(letra)) {
-            const newPalavraEscondida = palavraEscondia.map((char, index) =>
+            const newPalavraEscondida = palavraEscondida.map((char, index) =>
                 palavra[index] === letra ? letra : char
             );
-            setPalavraEscondiapalavraEscondia(newPalavraEscondida);
+            setPalavraEscondida(newPalavraEscondida);
         } else {
             setVidas(vidas - 1);
         }
@@ -36,25 +37,19 @@ export default function JogoForca({
         setLetras([...letras, letra]);
     };
 
-    const ganhou = palavraEscondia.join('') === palavra;
+    const ganhou = palavraEscondida.join('') === palavra;
     const perdeu = vidas === 0;
 
     return (
-        // <View>
-        //     <Text>a palavra é: {Forca}</Text>
-        //     <Text>Tente acertar: {palavraEscondia}</Text>
-        //     <TextInput placeholder="Digite uma letra" />
-        //     <Button title="Voltar" onPress={voltar} />
-        // </View>
         <View style={styles.container}>
-            <Text style={styles.word}>{palavraEscondia.join(' ')}</Text>
+            <Text style={styles.word}> {palavraEscondida.join(' ')} </Text>
             <Text style={styles.guessedLetters}>
                 Guessed Letters: {letras.join(', ')}
             </Text>
             <Text style={styles.remainingAttempts}>
                 Remaining Attempts: {vidas}
             </Text>
-            {ganhou && <Text style={styles.winMessage}>You Win!</Text>}
+            {ganhou && <Text style={styles.winMessage}> You Win! </Text>}
             {perdeu && <Text style={styles.loseMessage}>You Lose!</Text>}
             {!ganhou && !perdeu && (
                 <View style={styles.keyboard}>
@@ -68,6 +63,8 @@ export default function JogoForca({
                     ))}
                 </View>
             )}
+            <Button title="Voltar" onPress={voltar} />
+            <Text>a palavra é: {palavra}</Text>
         </View>
     )
 }
