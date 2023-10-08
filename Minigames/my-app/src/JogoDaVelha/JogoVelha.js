@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 
-const startValues = [
+const tabuleiro = [
     ["", "", ""],
     ["", "", ""],
     ["", "", ""]
@@ -13,65 +13,65 @@ export default function JogoVelha({
     Jogador2
 }) {
 
-    const [states, setStates] = useState(startValues);
+    const [casas, setCasas] = useState(tabuleiro);
     const [vez, setVez] = useState("X");
 
     useEffect(() => {
-        checkWin();
-    }, [states])
+        verificarVitoria();
+    }, [casas])
 
-    const checkPlayerWin = (vez) => {
+    const verificarQuemGanhou = (vez) => {
 
         for (let i = 0; i < 3; i++) {
-            if (states[i][0] === vez
-                && states[i][1] === vez
-                && states[i][2] === vez) {
+            if (casas[i][0] === vez
+                && casas[i][1] === vez
+                && casas[i][2] === vez) {
                 return true
             }
         }
 
         for (let i = 0; i < 3; i++) {
-            if (states[0][i] === vez
-                && states[1][i] === vez
-                && states[2][i] === vez) {
+            if (casas[0][i] === vez
+                && casas[1][i] === vez
+                && casas[2][i] === vez) {
                 return true
             }
         }
 
-        if (states[0][0] === vez
-            && states[1][1] === vez
-            && states[2][2] === vez) {
+        if (casas[0][0] === vez
+            && casas[1][1] === vez
+            && casas[2][2] === vez) {
             return true;
         }
-        if (states[0][2] === vez
-            && states[1][1] === vez
-            && states[2][0] === vez) {
+        if (casas[0][2] === vez
+            && casas[1][1] === vez
+            && casas[2][0] === vez) {
             return true;
         }
     };
 
-    const endPlay = (message) => {
+    const acabarJogo = (message) => {
         alert(message);
-        setStates(startValues);
+        setCasas(tabuleiro);
         handleClick();
     }
 
-    const checkWin = () => {
-        if (checkPlayerWin("X")) {
-            endPlay(`O jogador ${Jogador1} venceu!`);
-        } else if (checkPlayerWin("O")) {
-            endPlay(`O jogador ${Jogador2} venceu!`);
+    const verificarVitoria = () => {
+        if (verificarQuemGanhou("X")) {
+            acabarJogo(`O jogador ${Jogador1} venceu!`);
+        } else if (verificarQuemGanhou("O")) {
+            acabarJogo(`O jogador ${Jogador2} venceu!`);
         } else {
-            let countStates = 0;
+            let contCasas = 0;
 
-            states.forEach(line => {
-                line.forEach(column => {
-                    if (column === "X" || column === "O") countStates++;
+            casas.forEach(linha => {
+                linha.forEach(coluna => {
+                    if (coluna === "X" || coluna === "O") contCasas++;
                 });
             });
 
-            if (countStates === 9) {
-                endPlay("Ninguém venceu!");
+            if (contCasas === 9) {
+                acabarJogo("Ninguém venceu!");
             }
         }
     }
@@ -89,36 +89,36 @@ export default function JogoVelha({
         }
     }
 
-    const handleClickPosition = (line, column) => {
-        if (states[line][column] != "") {
+    const handleClickPosition = (linha, coluna) => {
+        if (casas[linha][coluna] != "") {
             return;
         }
 
-        const newState = [[...states[0]], [...states[1]], [...states[2]]]
-        newState[line][column] = vez;
-        setStates(newState);
+        const newCasa = [[...casas[0]], [...casas[1]], [...casas[2]]]
+        newCasa[linha][coluna] = vez;
+        setCasas(newCasa);
         TrocaPlayer();
     }
 
-    const getPlayerName = () => vez === "X" ? Jogador1 : Jogador2
+    const nomeJogador = () => vez === "X" ? Jogador1 : Jogador2
 
     return (
         <View style={styles.container}>
             <Text>Jogo da Velha</Text>
-            <Text>É a vez do Player: {getPlayerName()} - {vez}</Text>
+            <Text>É a vez do Player: {nomeJogador()} - {vez}</Text>
 
             {
-                states.map((line, indexLine) => {
+                casas.map((linha, indexLinha) => {
                     return (
-                        <View style={styles.line} key={indexLine}>
-                            {line.map((column, indexColumn) => (
+                        <View style={styles.linha} key={indexLinha}>
+                            {linha.map((coluna, indexColuna) => (
                                 <TouchableOpacity
-                                    key={`${indexLine}${indexColumn}${column}`}
-                                    onPress={() => handleClickPosition(indexLine, indexColumn)}
+                                    key={`${indexLinha}${indexColuna}${coluna}`}
+                                    onPress={() => handleClickPosition(indexLinha, indexColuna)}
                                 >                                   
-                                    <View style={styles.buttonGame}>
-                                        <Text style={styles.buttonGameFont}>
-                                            {column}
+                                    <View style={styles.tabuleiroDoJogo}>
+                                        <Text style={styles.casasTabuleiro}>
+                                            {coluna}
                                             
                                         </Text>
                                     </View>
@@ -143,11 +143,11 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 40,
     },
-    line: {
+    linha: {
         display: "flex",
         flexDirection: "row"
     },
-    buttonGame: {
+    tabuleiroDoJogo: {
         backgroundColor: '#fff',
         width: 80,
         height: 80,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    buttonGameFont: {
+    casasTabuleiro: {
         fontSize: 50,
         color: "#000"
     }
