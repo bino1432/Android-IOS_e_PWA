@@ -1,102 +1,125 @@
-import { useEffect, useState } from "react"
-import { View, Button, Text, TextInput, StyleSheet } from "react-native"
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, Image }
+  from 'react-native';
+  
+  export default function JogoForca ({ changeScreen, palavra, setPalavra }) {
+    const [tentativa, setTentativa] = useState('');
+    const [erros, setErros] = useState(0);
 
-export default function JogoForca({
-    changeScreen,
-    Forca
-}) {
+    const palavraInicial = palavra.split("").map((letra) => {
+        return letra === " " ? " " : " _ ";
+    });
+    const [palavraAparece, setPalavraAparece] = useState(palavraInicial);
+    const [palavraAdivinha, setPalavraAdivinha] = useState("");
+    const [letrasChutadas, setletrasChutadas] = useState([]);
 
-    const [palavra, setPalavra] = useState(Forca)
-    const [palavraEscondida, setPalavraEscondida] = useState([])
-    const [letras, setLetras] = useState([])
-    const [vidas, setVidas] = useState(6)
-
-    useEffect(() => {
-        const randomIndex = Math.floor(Math.random() * palavra.length);
-        setPalavra(palavra[randomIndex].toUpperCase());
-
-        setPalavraEscondida(Array(palavra.leght).fill('_'));
-    }, []);
+    const [vidas, setVidas] = useState(0);
+    const [vidasRestantes, setVidasRestantes] = useState(6);
 
     const voltar = () => {
-        changeScreen("EscolhaPalavra")
+        setPalavra(palavra);
+        changeScreen("EscolhaPalavra");
     }
 
-    const veridicarLetras = (letra) => {
-        if (palavra.includes(letra)) {
-            const newPalavraEscondida = palavraEscondida.map((char, index) =>
-                palavra[index] === letra ? letra : char
-            );
-            setPalavraEscondida(newPalavraEscondida);
-        } else {
-            setVidas(vidas - 1);
+    useEffect(() => {
+        if (palavraAparece.join("").toUpperCase() === palavra.toUpperCase()) {
+            setTimeout(() => {
+                alert(`Você Ganhou\nA palavra era: ${palavraAparece.join("")}`);
+                voltar();
+            }, 10);
         }
+        let vidasTmp = vidas;
+        if (vidasTmp == 6) {
+            setTimeout(() => {
+                alert("Você Perdeu")
+                changeScreen("EscolhaPalavra")
+            }, 10);
+        }
+    }, [palavraAparece, vidas]);
 
-        setLetras([...letras, letra]);
-    };
+    const VerificarLetra = () => {
+        let vidastmp = vidas;
+        let contVidasRestantes = vidasRestantes;
+        if (palavraAdivinha.length >= 1 && palavraAdivinha.match('[A-z]+')) {
+            if (palavraAdivinha.toUpperCase() === palavra.toUpperCase()) {
+                alert(`Parabéns!\nA palavra era: ${palavra}`);
+                voltar();
+            } else if (palavraAdivinha.length == palavra.length) {
+                setVidas(++vidastmp);
+                setVidasRestantes(--contVidasRestantes);
+            } else {
+                const letrasChutadasTmp = [...letrasChutadas];
+                if (!(letrasChutadasTmp.includes(`${palavraAdivinha.toUpperCase().charAt(0)} `))) {
+                    letrasChutadasTmp.push(`${palavraAdivinha.toUpperCase().charAt(0)} `);
+                    setletrasChutadas(letrasChutadasTmp);
+                    let palavraTmp = palavra.toUpperCase().split("")
+                    
+                    palavraTmp = palavraTmp.map((letra) => {
+                        return letra != " " ? letra : "";
+                    });
 
-    const ganhou = palavraEscondida.join('') === palavra;
-    const perdeu = vidas === 0;
+                    palavraTmp = palavraTmp.map((letra) => {
+                        return letra === palavraAdivinha.toUpperCase().charAt(0);
+                    });
+
+                    const palavraApareceTmp = [...palavraAparece];
+                    let contTem = 0;
+
+                    palavraTmp.map((letra, index) => {
+                        if (letra) {
+                            palavraApareceTmp[index] = palavraAdivinha.toUpperCase().charAt(0);
+                            contTem++;
+                        }
+                    });
+
+                    if (contTem === 0) {
+                        setVidas(++vidastmp);
+                        setVidasRestantes(--contVidasRestantes);
+                    }
+
+                    setPalavraAparece(palavraApareceTmp);
+                }
+
+            }
+        } else {
+            alert("Deve conter pelo menos uma letra e apenas letras!")
+        }
+        setPalavraAdivinha("");
+    }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.word}> {palavraEscondida.join(' ')} </Text>
-            <Text style={styles.guessedLetters}>
-                Guessed Letters: {letras.join(', ')}
-            </Text>
-            <Text style={styles.remainingAttempts}>
-                Remaining Attempts: {vidas}
-            </Text>
-            {ganhou && <Text style={styles.winMessage}> You Win! </Text>}
-            {perdeu && <Text style={styles.loseMessage}>You Lose!</Text>}
-            {!ganhou && !perdeu && (
-                <View style={styles.keyboard}>
-                    {Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ').map((letra, index) => (
-                        <Button
-                            key={index}
-                            title={letra}
-                            onPress={() => veridicarLetras(letra)}
-                            disabled={letras.includes(letra)}
-                        />
-                    ))}
-                </View>
-            )}
+
+            <Text style={styles.text} >Vidas Restantes: {vidasRestantes}</Text>
+            <Text>{palavraAparece}</Text>
+            <Text>Letras Usadas: {letrasChutadas}</Text>
+
+            <TextInput placeholder='Digite a letra ou palavra' value={palavraAdivinha} onChangeText={setPalavraAdivinha} style={styles.input} id="abcde" />
+
+            <Button title="Acertar" onPress={VerificarLetra} />
             <Button title="Voltar" onPress={voltar} />
-            <Text>a palavra é: {palavra}</Text>
+
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        gap: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
     },
-    word: {
-        fontSize: 24,
-        marginBottom: 20,
+    input: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: 'black',
+        borderRadius: 5,
+        padding: 5,
+        color: 'black',
     },
-    guessedLetters: {
-        fontSize: 18,
-        marginBottom: 10,
-    },
-    remainingAttempts: {
-        fontSize: 18,
-        marginBottom: 10,
-    },
-    keyboard: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
-    winMessage: {
-        fontSize: 24,
-        color: 'green',
-        fontWeight: 'bold',
-    },
-    loseMessage: {
-        fontSize: 24,
-        color: 'red',
-        fontWeight: 'bold',
-    },
-});  
+    text: {
+        fontSize: 20
+    }
+});

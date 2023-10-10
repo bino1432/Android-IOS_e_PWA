@@ -1,4 +1,4 @@
-import { Text, Button, View} from 'react-native';
+import { Text, Button, View, StyleSheet} from 'react-native';
 
 export default function inicial({
     changeScreen
@@ -17,7 +17,7 @@ export default function inicial({
     }
 
     return(
-        <View>
+        <View style={styles.container}>
             <Text>Qual minigame você deseja jogar?</Text>
             <Button title='Jogo da Velha' onPress={Velha}/>
             <Button title='Jogo da Forca' onPress={Forca}/>
@@ -26,3 +26,14 @@ export default function inicial({
     );
 
 }
+
+const styles = StyleSheet.create( {
+    container: {
+        flex: 1,
+        gap: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+    },
+    
+});

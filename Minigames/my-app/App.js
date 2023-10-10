@@ -53,13 +53,15 @@ export default function App() {
       {checkScreen("EscolhaPalavra") && (
         <EscolhaPalavra 
         changeScreen={changeScreen}
-        mudarPalavra={setPalavraForca}
+        palavra={palavra}
+        setPalavra={setPalavra}
         />
       )}
       {checkScreen("JogoForca") && (
         <JogoForca 
         changeScreen={changeScreen}
-        Forca={palavra}
+        palavra={palavra}
+        setPalavra={setPalavra}
         />
       )}
       {checkScreen("JogadoresMemoria") && (
