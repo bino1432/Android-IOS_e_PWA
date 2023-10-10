@@ -23,10 +23,6 @@ export default function App() {
     setPlayer2(nome2);
   }
 
-  const setPalavraForca = (Resposta) => {
-    setPalavra(Resposta)
-  }
-
   const changeScreen = (newScreen) => setScreen(newScreen);
 
   return (

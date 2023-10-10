@@ -1,100 +1,93 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image }
+import { StyleSheet, Text, View, TextInput, Button }
   from 'react-native';
   
-  export default function JogoForca ({ changeScreen, palavra, setPalavra }) {
-    const [tentativa, setTentativa] = useState('');
-    const [erros, setErros] = useState(0);
+  export default function JogoForca ({ changeScreen, palavra }) {
 
-    const palavraInicial = palavra.split("").map((letra) => {
+    const palavraCerta = palavra.split("").map((letra) => {
         return letra === " " ? " " : " _ ";
     });
-    const [palavraAparece, setPalavraAparece] = useState(palavraInicial);
-    const [palavraAdivinha, setPalavraAdivinha] = useState("");
+    
+    const [palavraEscondida, setPalavraEscondida] = useState(palavraCerta);
+    const [tentarLetra, setTentarLetra] = useState("");
     const [letrasChutadas, setletrasChutadas] = useState([]);
-
-    const [vidas, setVidas] = useState(0);
     const [vidasRestantes, setVidasRestantes] = useState(6);
 
     const voltar = () => {
-        setPalavra(palavra);
         changeScreen("EscolhaPalavra");
     }
 
     useEffect(() => {
-        if (palavraAparece.join("").toUpperCase() === palavra.toUpperCase()) {
+        if (palavraEscondida.join("").toUpperCase() === palavra.toUpperCase()) {
             setTimeout(() => {
-                alert(`Você Ganhou\nA palavra era: ${palavraAparece.join("")}`);
+                alert(`Você Ganhou\nA palavra era: ${palavraEscondida.join("")}`);
                 voltar();
             }, 10);
         }
-        let vidasTmp = vidas;
-        if (vidasTmp == 6) {
+        let verificarVidas = vidasRestantes;
+        if (verificarVidas == 0) {
             setTimeout(() => {
                 alert("Você Perdeu")
                 changeScreen("EscolhaPalavra")
             }, 10);
         }
-    }, [palavraAparece, vidas]);
+    }, [palavraEscondida, vidasRestantes]);
 
     const VerificarLetra = () => {
-        let vidastmp = vidas;
         let contVidasRestantes = vidasRestantes;
-        if (palavraAdivinha.length >= 1 && palavraAdivinha.match('[A-z]+')) {
-            if (palavraAdivinha.toUpperCase() === palavra.toUpperCase()) {
-                alert(`Parabéns!\nA palavra era: ${palavra}`);
+        if (tentarLetra.length >= 1 && tentarLetra.match('[A-z]+')) {
+            if (tentarLetra.toUpperCase() === palavra.toUpperCase()) {
+                alert(`Você Ganhou \nA palavra era: ${palavra}`);
                 voltar();
-            } else if (palavraAdivinha.length == palavra.length) {
-                setVidas(++vidastmp);
+            } else if (tentarLetra.length == palavra.length) {
                 setVidasRestantes(--contVidasRestantes);
             } else {
-                const letrasChutadasTmp = [...letrasChutadas];
-                if (!(letrasChutadasTmp.includes(`${palavraAdivinha.toUpperCase().charAt(0)} `))) {
-                    letrasChutadasTmp.push(`${palavraAdivinha.toUpperCase().charAt(0)} `);
-                    setletrasChutadas(letrasChutadasTmp);
-                    let palavraTmp = palavra.toUpperCase().split("")
+                const atualizarLetrasChutadas = [...letrasChutadas];
+                if (!(atualizarLetrasChutadas.includes(`${tentarLetra.toUpperCase().charAt(0)} `))) {
+                    atualizarLetrasChutadas.push(`${tentarLetra.toUpperCase().charAt(0)} `);
+                    setletrasChutadas(atualizarLetrasChutadas);
+                    let verificarPalavra = palavra.toUpperCase().split("")
                     
-                    palavraTmp = palavraTmp.map((letra) => {
+                    verificarPalavra = verificarPalavra.map((letra) => {
                         return letra != " " ? letra : "";
                     });
 
-                    palavraTmp = palavraTmp.map((letra) => {
-                        return letra === palavraAdivinha.toUpperCase().charAt(0);
+                    verificarPalavra = verificarPalavra.map((letra) => {
+                        return letra === tentarLetra.toUpperCase().charAt(0);
                     });
 
-                    const palavraApareceTmp = [...palavraAparece];
-                    let contTem = 0;
+                    const verificarPalavraEscondida = [...palavraEscondida];
+                    let cont = 0;
 
-                    palavraTmp.map((letra, index) => {
+                    verificarPalavra.map((letra, index) => {
                         if (letra) {
-                            palavraApareceTmp[index] = palavraAdivinha.toUpperCase().charAt(0);
-                            contTem++;
+                            verificarPalavraEscondida[index] = tentarLetra.toUpperCase().charAt(0);
+                            cont++;
                         }
                     });
 
-                    if (contTem === 0) {
-                        setVidas(++vidastmp);
+                    if (cont === 0) {
                         setVidasRestantes(--contVidasRestantes);
                     }
 
-                    setPalavraAparece(palavraApareceTmp);
+                    setPalavraEscondida(verificarPalavraEscondida);
                 }
 
             }
         } else {
-            alert("Deve conter pelo menos uma letra e apenas letras!")
+            alert("Você deve inserir pelo menos uma letra \n e DEVE ser uma letra")
         }
-        setPalavraAdivinha("");
+        setTentarLetra("");
     }
 
     return (
         <View style={styles.container}>
 
             <Text style={styles.text} >Vidas Restantes: {vidasRestantes}</Text>
-            <Text>{palavraAparece}</Text>
+            <Text>{palavraEscondida}</Text>
             <Text>Letras Usadas: {letrasChutadas}</Text>
 
-            <TextInput placeholder='Digite a letra ou palavra' value={palavraAdivinha} onChangeText={setPalavraAdivinha} style={styles.input} id="abcde" />
+            <TextInput placeholder='Insira uma letra' onChangeText={setTentarLetra} style={styles.input} />
 
             <Button title="Acertar" onPress={VerificarLetra} />
             <Button title="Voltar" onPress={voltar} />

@@ -50,33 +50,32 @@ export default function JogoVelha({
         }
     };
 
-    const acabarJogo = (message) => {
-        alert(message);
-        setCasas(tabuleiro);
-        handleClick();
-    }
-
     const verificarVitoria = () => {
         if (verificarQuemGanhou("X")) {
-            acabarJogo(`O jogador ${Jogador1} venceu!`);
+            alert(`O jogador ${Jogador1} venceu!`);
+            voltar();
         } else if (verificarQuemGanhou("O")) {
-            acabarJogo(`O jogador ${Jogador2} venceu!`);
+            alert(`O jogador ${Jogador2} venceu!`);
+            voltar();   
         } else {
             let contCasas = 0;
 
             casas.forEach(linha => {
                 linha.forEach(coluna => {
-                    if (coluna === "X" || coluna === "O") contCasas++;
+                    if (coluna === "X" || coluna === "O"){
+                        contCasas++;
+                    }
                 });
             });
 
             if (contCasas === 9) {
-                acabarJogo("Ninguém venceu!");
+                alert("Ninguém venceu!");
+                voltar();
             }
         }
     }
 
-    const handleClick = (event) => {
+    const voltar = () => {
         changeScreen("JogadoresVelha")
     }
 
@@ -89,14 +88,14 @@ export default function JogoVelha({
         }
     }
 
-    const handleClickPosition = (linha, coluna) => {
+    const verificarCasa = (linha, coluna) => {
         if (casas[linha][coluna] != "") {
             return;
         }
 
-        const newCasa = [[...casas[0]], [...casas[1]], [...casas[2]]]
-        newCasa[linha][coluna] = vez;
-        setCasas(newCasa);
+        const novaCasa = [[...casas[0]], [...casas[1]], [...casas[2]]]
+        novaCasa[linha][coluna] = vez;
+        setCasas(novaCasa);
         TrocaPlayer();
     }
 
@@ -114,7 +113,7 @@ export default function JogoVelha({
                             {linha.map((coluna, indexColuna) => (
                                 <TouchableOpacity
                                     key={`${indexLinha}${indexColuna}${coluna}`}
-                                    onPress={() => handleClickPosition(indexLinha, indexColuna)}
+                                    onPress={() => verificarCasa(indexLinha, indexColuna)}
                                 >                                   
                                     <View style={styles.tabuleiroDoJogo}>
                                         <Text style={styles.casasTabuleiro}>
@@ -129,14 +128,13 @@ export default function JogoVelha({
                 })
             }
 
-            <Button title="voltar" onPress={handleClick} />
+            <Button title="voltar" onPress={voltar} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
         width: 80,
@@ -157,7 +155,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     casasTabuleiro: {
-        fontSize: 50,
+        fontSize: 30,
         color: "#000",
     }
 });

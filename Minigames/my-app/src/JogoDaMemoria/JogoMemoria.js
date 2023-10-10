@@ -157,6 +157,12 @@ export default function Memoria({ changeScreen, Jogador1, Jogador2 }) {
             </View>
             <Button title="Voltar" onPress={voltar} />
         </View>
+
+        // <View>
+        //     <Text>Jogo da Memoria</Text>
+        //     <Button title="Voltar" onPress={voltar} />
+        // </View>
+    
     )
 }
 
