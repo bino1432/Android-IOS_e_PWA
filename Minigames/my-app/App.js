@@ -72,7 +72,9 @@ export default function App() {
       )}
       {checkScreen("JogoMemoria") && (
         <JogoMemoria 
-        changeScreen={changeScreen} 
+        changeScreen={changeScreen}
+        Jogador1={player1}
+        Jogador2={player2}
         />
       )}
     </View>
