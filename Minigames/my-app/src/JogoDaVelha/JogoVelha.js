@@ -103,7 +103,7 @@ export default function JogoVelha({
 
     return (
         <View style={styles.container}>
-            <Text>Jogo da Velha</Text>
+            <Text style={styles.text}>Jogo da Velha</Text>
             <Text>É a vez do Player: {nomeJogador()} - {vez}</Text>
 
             {
@@ -156,6 +156,10 @@ const styles = StyleSheet.create({
     },
     casasTabuleiro: {
         fontSize: 30,
+        color: "#000",
+    },
+    text: {
+        fontSize: 20,
         color: "#000",
     }
 });

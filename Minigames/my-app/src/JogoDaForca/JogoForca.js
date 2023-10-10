@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button }
   from 'react-native';
   
-  export default function JogoForca ({ changeScreen, palavra }) {
+  export default function JogoForca ({ changeScreen, palavra, setPalavra }) {
 
     const palavraCerta = palavra.split("").map((letra) => {
         return letra === " " ? " " : " _ ";
@@ -14,6 +14,7 @@ import { StyleSheet, Text, View, TextInput, Button }
     const [vidasRestantes, setVidasRestantes] = useState(6);
 
     const voltar = () => {
+        setPalavra("")
         changeScreen("EscolhaPalavra");
     }
 

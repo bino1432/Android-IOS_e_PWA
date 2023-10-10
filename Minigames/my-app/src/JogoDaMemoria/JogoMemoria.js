@@ -127,41 +127,41 @@ export default function Memoria({ changeScreen, Jogador1, Jogador2 }) {
 
 
     return (
-        <View style={styles.container}>
-            <Text>Jogo da Memória</Text>
-            <View>
-                {
-                    showedGame.map((row, indexRow) => {
-                        return (
-                            <View style={styles.row} key={indexRow}>
-                                {row.map((column, indexColumn) => (
-                                    <Pressable
-                                        key={`${indexRow}, ${indexColumn}, ${column}`}
-                                        onPress={() => play(indexRow, indexColumn)}
-                                        disabled={(column.val != "")}
-                                    >
-                                        <View
-                                            style={(column.val != "" ? (column.player != "" ? (column.player == Jogador1 ? styles.cardGameJog1 : styles.cardGameJog2) : styles.cardGameDisabled) : styles.cardGame)}
+        // <View style={styles.container}>
+        //     <Text>Jogo da Memória</Text>
+        //     <View>
+        //         {
+        //             showedGame.map((row, indexRow) => {
+        //                 return (
+        //                     <View style={styles.row} key={indexRow}>
+        //                         {row.map((column, indexColumn) => (
+        //                             <Pressable
+        //                                 key={`${indexRow}, ${indexColumn}, ${column}`}
+        //                                 onPress={() => play(indexRow, indexColumn)}
+        //                                 disabled={(column.val != "")}
+        //                             >
+        //                                 <View
+        //                                     style={(column.val != "" ? (column.player != "" ? (column.player == Jogador1 ? styles.cardGameJog1 : styles.cardGameJog2) : styles.cardGameDisabled) : styles.cardGame)}
 
-                                        >
-                                            <Text style={styles.cardGameFont}>
-                                                {column.val}
-                                            </Text>
-                                        </View>
-                                    </Pressable>
-                                ))}
-                            </View>
-                        )
-                    })
-                }
-            </View>
-            <Button title="Voltar" onPress={voltar} />
-        </View>
-
-        // <View>
-        //     <Text>Jogo da Memoria</Text>
+        //                                 >
+        //                                     <Text style={styles.cardGameFont}>
+        //                                         {column.val}
+        //                                     </Text>
+        //                                 </View>
+        //                             </Pressable>
+        //                         ))}
+        //                     </View>
+        //                 )
+        //             })
+        //         }
+        //     </View>
         //     <Button title="Voltar" onPress={voltar} />
         // </View>
+
+        <View>
+            <Text>Jogo da Memoria</Text>
+            <Button title="Voltar" onPress={voltar} />
+        </View>
     
     )
 }
