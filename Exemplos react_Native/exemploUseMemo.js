@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 let variavel = 0;
-export default function exemplo() {
+export default function exemploUseMemo() {
     const [contador1, setContador1] = useState(0);
     const [contador2, setContador2] = useState(0);
     useEffect(() => {
